@@ -1,0 +1,5 @@
+# Python
+__pycache__/
+
+# Dados locais do app
+desktop-app/data/*.json
