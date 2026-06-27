@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 
-from storage import save_client
+from storage import CPFDuplicadoError, save_client
 
 
 class CadastroClienteScreen(tk.Frame):
@@ -12,7 +12,7 @@ class CadastroClienteScreen(tk.Frame):
         header = tk.Frame(self, bg="#f0f0f0")
         header.pack(fill="x", padx=20, pady=(20, 10))
 
-        tk.Button(header, text="← Voltar", command=self.on_voltar).pack(side="left")
+        tk.Button(header, text="Voltar", command=self.on_voltar).pack(side="left")
 
         tk.Label(
             self,
@@ -58,15 +58,19 @@ class CadastroClienteScreen(tk.Frame):
             messagebox.showwarning("Atenção", "Preencha todos os campos.")
             return
 
-        save_client(
-            {
-                "nome": nome,
-                "cpf": cpf,
-                "email": email,
-                "telefone": telefone,
-                "endereco": endereco,
-            }
-        )
+        try:
+            save_client(
+                {
+                    "nome": nome,
+                    "cpf": cpf,
+                    "email": email,
+                    "telefone": telefone,
+                    "endereco": endereco,
+                }
+            )
+        except CPFDuplicadoError:
+            messagebox.showerror("Erro", "CPF já cadastrado.")
+            return
 
         messagebox.showinfo("Sucesso", "Cliente salvo com sucesso!")
         self._limpar_campos()

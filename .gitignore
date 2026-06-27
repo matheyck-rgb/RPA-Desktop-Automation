@@ -2,7 +2,7 @@
 __pycache__/
 
 # Dados locais do app
-desktop-app/data/*.json
+desktop-app/data/*.db
 assets/clientes.xlsx
 
 # Ambiente virtual
